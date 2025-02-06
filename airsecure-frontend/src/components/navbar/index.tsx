@@ -1,4 +1,4 @@
-import Logo from "@/assets/logo";
+import Logo from "@/components/logo";
 // import { useNavigate, useLocation } from "react-router-dom";
 import MobileDropdown from "./components/MobileDropdown";
 import { menuItems } from "./utils";
