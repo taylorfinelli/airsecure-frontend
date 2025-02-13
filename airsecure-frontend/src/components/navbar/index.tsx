@@ -6,7 +6,7 @@ import Schedule from "@/components/schedule";
 
 export default function NavBar() {
   return (
-    <div className="flex flex-row pt-2 h-16 w-full px-6 md:px-0 md:w-5/6 max-w-screen-2xl items-center justify-between">
+    <div className="flex flex-row pt-2 mb-2 h-16 w-full px-6 md:px-0 md:w-5/6 max-w-screen-2xl items-center justify-between">
       <Logo />
 
       {/* For desktop view */}

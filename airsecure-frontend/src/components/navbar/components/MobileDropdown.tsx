@@ -10,7 +10,7 @@ export default function MobileDropdown() {
   };
 
   return (
-    <div className="relative md:hidden">
+    <div className="relative md:hidden z-10">
       {/* Hamburger Icon */}
       <button
         className="flex flex-col justify-center items-center space-y-1.5 w-8 h-8 rounded-sm bg-blue-primary"
