@@ -13,7 +13,8 @@ export default {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
-				"blue-primary" : "#729B8D"
+				"green-primary" : "#729B8D",
+				"green-secondary"	: "#4A6A59",
 			},
   		keyframes: {
   			'accordion-down': {

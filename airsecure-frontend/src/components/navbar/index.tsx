@@ -13,7 +13,7 @@ export default function NavBar() {
       <div className="md:flex flex-row items-center space-x-8 hidden">
         <ul className="flex space-x-8">
           {menuItems.map((item) => (
-            <li className="cursor-pointer md:hover:text-blue-primary transition duration-200">
+            <li className="cursor-pointer md:hover:text-green-primary transition duration-200">
               {item.text}
             </li>
           ))}
