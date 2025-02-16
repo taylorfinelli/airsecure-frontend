@@ -4,7 +4,7 @@ import Why from "./why";
 
 export default function Home() {
   return (
-    <div className="w-full">
+    <div className="w-full mb-40">
       <Hero />
       <Why />
       <BeforeAndAfter />
