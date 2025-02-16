@@ -1,7 +1,7 @@
 export default function Hero() {
   return (
     <div className="flex items-center justify-center">
-      <div className="h-96 w-full bg-blue-primary flex flex-row">
+      <div className="h-96 w-full bg-green-primary flex flex-row">
         <div className="lg:w-1/2 h-full lg:block w-full overflow-hidden">
           <img
             src="/assets/cleaner.jpg"
@@ -9,8 +9,8 @@ export default function Hero() {
           />
         </div>
       </div>
-      <div className="absolute flex justify-center">
-        <div className="flex flex-row w-5/6 justify-end">
+      <div className="absolute flex justify-center max-w-screen-2xl">
+        <div className="flex flex-row justify-end">
           <div className="lg:w-1/2 w-full h-full p-4">
             <p className="text-white md:text-4xl font-semibold lg:text-left text-center text-2xl">
               Duct and Vent Cleaning
