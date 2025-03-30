@@ -31,7 +31,7 @@ export default function FAQ() {
     {
       trigger: "Is AirSecure available in my area?",
       content:
-        "AirSecure proudly operates in the Northern Utah area, including Salt Lake City, Ogden, Provo, and surrounding areas. If you're in need of duct cleaning services in these areas, we're here to help! Our team of experienced technicians can provide professional duct cleaning services to improve your indoor air quality and keep your home clean and comfortable.",
+        "AirSecure proudly operates in Northern Utah in areas ranging from Nephi to Salt Lake City. If you're in need of duct cleaning services in these areas, we're here to help! Our team of experienced technicians can provide professional duct cleaning services to improve your indoor air quality and keep your home clean and comfortable.",
     },
   ];
 
