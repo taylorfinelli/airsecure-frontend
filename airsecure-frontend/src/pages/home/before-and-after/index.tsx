@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/carousel";
 import { carouselImagePaths } from "./utils";
 import { useEffect, useState } from "react";
+import Header from "@/components/text/header";
 
 export default function BeforeAndAfter() {
   const [api, setApi] = useState<CarouselApi>();
@@ -29,11 +30,10 @@ export default function BeforeAndAfter() {
   return (
     <div className="w-full flex justify-center">
       <div className="w-5/6 max-w-screen-2xl flex flex-col items-center gap-y-8">
-        <p className="md:text-4xl font-semibold text-center text-2xl text-green-secondary">
-          Still Not Convinced?
-        </p>
-        <p className="text-center text-green-secondary">
-          Take a look at some before-and-after photos to see what might be lingering in your home.
+        <Header text="Still Not Convinced?" variant="dark" center={true} />
+        <p className="text-center">
+          Take a look at some before-and-after photos to see what might be
+          lingering in your home.
         </p>
         <Carousel setApi={setApi} className="w-5/6">
           <CarouselContent>

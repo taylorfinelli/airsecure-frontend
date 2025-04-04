@@ -1,3 +1,4 @@
+import Header from "@/components/text/header";
 import {
   Accordion,
   AccordionContent,
@@ -38,9 +39,11 @@ export default function FAQ() {
   return (
     <div className="flex flex-col items-center py-8">
       <div className="flex flex-col w-5/6 gap-y-8 mb-8 max-w-screen-2xl">
-        <p className="md:text-4xl font-semibold text-center text-3xl text-green-secondary">
-          Frequently Asked Questions
-        </p>
+        <Header
+          text="Frequently Asked Questions"
+          variant="dark"
+          center={false}
+        />
         <Accordion type="multiple">
           {accordionItems.map((item, id) => (
             <div key={id}>
@@ -55,9 +58,7 @@ export default function FAQ() {
                     </div>
                   }
                 </AccordionTrigger>
-                <AccordionContent className="text-green-secondary">
-                  {item.content}
-                </AccordionContent>
+                <AccordionContent>{item.content}</AccordionContent>
               </AccordionItem>
             </div>
           ))}
