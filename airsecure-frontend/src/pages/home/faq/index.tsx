@@ -38,12 +38,8 @@ export default function FAQ() {
 
   return (
     <div className="flex flex-col items-center py-8">
-      <div className="flex flex-col w-5/6 gap-y-8 mb-8 max-w-screen-2xl">
-        <Header
-          text="Frequently Asked Questions"
-          variant="dark"
-          center={false}
-        />
+      <div className="flex flex-col w-5/6 gap-y-8 mb-8 max-w-screen-2xl text-center md:text-start">
+        <Header text="Frequently Asked Questions" variant="dark" center={false} />
         <Accordion type="multiple">
           {accordionItems.map((item, id) => (
             <div key={id}>

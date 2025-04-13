@@ -18,9 +18,7 @@ export default function Why() {
                 ducts, you're helping prevent unnecessary wear and tear. This
                 can extend the lifespan of your system, saving you money on
                 repairs or replacements in the long run."
-            icon={
-              <ThermometerSunIcon className="h-8 w-8 text-green-secondary" />
-            }
+            icon={<ThermometerSunIcon className="h-8 w-8 text-green-secondary" />}
           />
 
           <WhyCard
@@ -48,7 +46,7 @@ export default function Why() {
       <div className="bg-green-primary w-full flex justify-center">
         <div className="w-5/6 gap-x-8 max-w-screen-2xl flex gap-y-8 py-8 justify-center md:justify-between items-center">
           <div className="flex flex-col md:flex-row items-center gap-x-8">
-            <Header text="Let us Help!" variant="light" />
+            <Header text="Let us help!" variant="light" />
             <p className="text-xl text-white text-center md:text-left">
               Schedule your service today and breathe easier tomorrow.
             </p>
