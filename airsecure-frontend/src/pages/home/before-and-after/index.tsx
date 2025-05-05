@@ -25,8 +25,6 @@ export default function BeforeAndAfter() {
     });
   }, [api]);
 
-  console.log(current);
-
   return (
     <div className="w-full flex justify-center">
       <div className="w-5/6 max-w-screen-2xl flex flex-col items-center gap-y-8">

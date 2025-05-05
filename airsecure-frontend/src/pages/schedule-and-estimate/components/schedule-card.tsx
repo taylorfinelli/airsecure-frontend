@@ -19,8 +19,9 @@ import { CalendarIcon, LoaderCircle } from "lucide-react";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/text/header";
+import { format } from "date-fns";
 
 interface ScheduleForm {
   firstName: string;
@@ -37,10 +38,15 @@ const scheduleFormSchema: ZodType<ScheduleForm> = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
   email: z.string().email("Invalid email address"),
   servicesNeeded: z.string().min(1, "Services needed is required"),
-  serviceDate: z.date(),
+  serviceDate: z.date({
+    required_error: "Please select a service date",
+  }).min(new Date(), { message: "Service date must be in the future" }),
 });
 
 export default function ScheduleCard() {
+  const [date, setDate] = useState<Date | undefined>();
+  const [open, setOpen] = useState(false);
+  
   const {
     register,
     handleSubmit,
@@ -56,9 +62,15 @@ export default function ScheduleCard() {
       phoneNumber: "",
       email: "",
       servicesNeeded: "",
-      serviceDate: new Date(),
+      serviceDate: undefined,
     },
   });
+
+  useEffect(() => {
+    if (date) {
+      setValue("serviceDate", date);
+    }
+  }, [date, setValue]);
 
   const formatPhoneNumber = (value: string) => {
     // Remove non-numeric characters
@@ -80,11 +92,18 @@ export default function ScheduleCard() {
 
   useEffect(() => {
     // Automatically format the phone number when it changes (paste or select)
-    console.log(phoneNumber);
     if (phoneNumber) {
       setValue("phoneNumber", formatPhoneNumber(phoneNumber));
     }
   }, [phoneNumber, setValue]); // When the phone number changes
+
+  const submitForm = (data: ScheduleForm) => {
+    const formattedData = {
+      ...data,
+      serviceDate: format(data.serviceDate, "MM-dd-yyyy"),
+    };
+    console.log(formattedData);
+  };
 
   return (
     <Card className="md:w-[30rem] rounded-2xl">
@@ -92,13 +111,13 @@ export default function ScheduleCard() {
         <Header text="Don't need an estimate?" variant="dark" center={true} />
         <p>Find your scheduling options below.</p>
         <CardContent className="flex flex-col gap-y-4 items-center">
-          <Button className="text-xl w-full">
+          <Button className="text-md w-full">
             Call us today @ 801-592-3163
           </Button>
           <Separator />
           <form
             className="flex flex-col items-center gap-y-4"
-            onSubmit={handleSubmit((data) => console.log(data))}
+            onSubmit={handleSubmit(submitForm)}
           >
             <div className="flex flex-row gap-x-4">
               <div>
@@ -174,21 +193,32 @@ export default function ScheduleCard() {
                 </Label>
               )}
             </div>
-            <Popover>
-              <PopoverTrigger asChild className="w-full">
-                <Button variant="outline">
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {<span>Select a service date</span>}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0">
-                <Calendar
-                  mode="single"
-                  initialFocus
-                  {...register("serviceDate")}
-                />
-              </PopoverContent>
-            </Popover>
+            <div className="w-full">
+              <Popover open={open} onOpenChange={setOpen}>
+                <PopoverTrigger asChild className="w-full">
+                  <Button variant="outline">
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {date ? format(date, "PPP") : <span>Select a service date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={(selectedDate) => {
+                      setDate(selectedDate);
+                      setOpen(false);
+                    }}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              {errors.serviceDate && (
+                <Label className="text-red-500">
+                  {errors.serviceDate.message}
+                </Label>
+                )}
+            </div>
             <CardDescription>
               Please note that this is not a guaranteed appointment. We will
               contact you to confirm your appointment time and date.

@@ -34,8 +34,6 @@ export default function ScheduleAndEstimate() {
     },
   ];
 
-  console.log(selectedItems);
-
   return (
     <div className="w-full flex justify-center mb-40">
       <div className="w-5/6 max-w-screen-2xl flex gap-y-8 gap-x-4">
