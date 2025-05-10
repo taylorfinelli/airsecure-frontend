@@ -46,7 +46,7 @@ const scheduleFormSchema: ZodType<ScheduleForm> = z.object({
 export default function ScheduleCard() {
   const [date, setDate] = useState<Date | undefined>();
   const [open, setOpen] = useState(false);
-  
+
   const {
     register,
     handleSubmit,
@@ -108,131 +108,131 @@ export default function ScheduleCard() {
   return (
     <Card className="md:w-[30rem] rounded-2xl">
       <CardHeader className="flex flex-col items-center">
-        <Header text="Don't need an estimate?" variant="dark" center={true} />
+        <Header size="2xl" text="Don't need an estimate?" variant="dark" center={true} />
         <p>Find your scheduling options below.</p>
-        <CardContent className="flex flex-col gap-y-4 items-center">
-          <Button className="text-md w-full">
-            Call us today @ 801-592-3163
-          </Button>
-          <Separator />
-          <form
-            className="flex flex-col items-center gap-y-4"
-            onSubmit={handleSubmit(submitForm)}
-          >
-            <div className="flex flex-row gap-x-4">
-              <div>
-                <Label>First name</Label>
-                <Input
-                  id="first-name"
-                  placeholder="John"
-                  {...register("firstName")}
-                />
-                {errors.firstName && (
-                  <Label className="text-red-500">
-                    {errors.firstName.message}
-                  </Label>
-                )}
-              </div>
-              <div>
-                <Label>Last name</Label>
-                <Input
-                  id="last-name"
-                  placeholder="Doe"
-                  {...register("lastName")}
-                />
-                {errors.lastName && (
-                  <Label className="text-red-500">
-                    {errors.lastName.message}
-                  </Label>
-                )}
-              </div>
-            </div>
-            <div className="w-full">
-              <Label>Phone number</Label>
-              <Controller
-                name="phoneNumber"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Input
-                    {...field}
-                    value={formatPhoneNumber(field.value)} // Format the phone number as the user types
-                    onChange={(e) => field.onChange(e.target.value)} // Update the form state
-                    maxLength={12} // Limit the length to "xxx-xxx-xxxx"
-                    placeholder="123-456-7890"
-                  />
-                )}
-              />
-              {errors.phoneNumber && (
-                <Label className="text-red-500">
-                  {errors.phoneNumber.message}
-                </Label>
-              )}
-            </div>
-            <div className="w-full">
-              <Label>Email address</Label>
-              <Input
-                id="email"
-                placeholder="john.doe@mail.com"
-                {...register("email")}
-              />
-              {errors.email && (
-                <Label className="text-red-500">{errors.email.message}</Label>
-              )}
-            </div>
-            <div className="w-full">
-              <Label>Services needed</Label>
-              <Textarea
-                id="services-needed"
-                placeholder={`Describe the services you're interested in. For example, "Basic ventilation cleaning and 1 dryer vent cleaning."`}
-                {...register("servicesNeeded")}
-              />
-              {errors.servicesNeeded && (
-                <Label className="text-red-500">
-                  {errors.servicesNeeded.message}
-                </Label>
-              )}
-            </div>
-            <div className="w-full">
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild className="w-full">
-                  <Button variant="outline">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : <span>Select a service date</span>}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={(selectedDate) => {
-                      setDate(selectedDate);
-                      setOpen(false);
-                    }}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              {errors.serviceDate && (
-                <Label className="text-red-500">
-                  {errors.serviceDate.message}
-                </Label>
-                )}
-            </div>
-            <CardDescription>
-              Please note that this is not a guaranteed appointment. We will
-              contact you to confirm your appointment time and date.
-            </CardDescription>
-            <Button type="submit" className="w-full">
-              {isSubmitting ? (
-                <LoaderCircle className="animate-spin" />
-              ) : (
-                "Submit"
-              )}
-            </Button>
-          </form>
-        </CardContent>
+        <Button className="text-md w-full">
+          Call us today @ 801-592-3163
+        </Button>
       </CardHeader>
+      <CardContent className="flex flex-col gap-y-4 items-center">
+        <Separator />
+        <form
+          className="flex flex-col items-center gap-y-4"
+          onSubmit={handleSubmit(submitForm)}
+        >
+          <div className="flex flex-row gap-x-4">
+            <div>
+              <Label>First name</Label>
+              <Input
+                id="first-name"
+                placeholder="John"
+                {...register("firstName")}
+              />
+              {errors.firstName && (
+                <Label className="text-red-500">
+                  {errors.firstName.message}
+                </Label>
+              )}
+            </div>
+            <div>
+              <Label>Last name</Label>
+              <Input
+                id="last-name"
+                placeholder="Doe"
+                {...register("lastName")}
+              />
+              {errors.lastName && (
+                <Label className="text-red-500">
+                  {errors.lastName.message}
+                </Label>
+              )}
+            </div>
+          </div>
+          <div className="w-full">
+            <Label>Phone number</Label>
+            <Controller
+              name="phoneNumber"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  {...field}
+                  value={formatPhoneNumber(field.value)} // Format the phone number as the user types
+                  onChange={(e) => field.onChange(e.target.value)} // Update the form state
+                  maxLength={12} // Limit the length to "xxx-xxx-xxxx"
+                  placeholder="123-456-7890"
+                />
+              )}
+            />
+            {errors.phoneNumber && (
+              <Label className="text-red-500">
+                {errors.phoneNumber.message}
+              </Label>
+            )}
+          </div>
+          <div className="w-full">
+            <Label>Email address</Label>
+            <Input
+              id="email"
+              placeholder="john.doe@mail.com"
+              {...register("email")}
+            />
+            {errors.email && (
+              <Label className="text-red-500">{errors.email.message}</Label>
+            )}
+          </div>
+          <div className="w-full">
+            <Label>Services needed</Label>
+            <Textarea
+              id="services-needed"
+              placeholder={`Describe the services you're interested in. If you're unsure, just say "I'm not sure."`}
+              {...register("servicesNeeded")}
+            />
+            {errors.servicesNeeded && (
+              <Label className="text-red-500">
+                {errors.servicesNeeded.message}
+              </Label>
+            )}
+          </div>
+          <div className="w-full">
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild className="w-full">
+                <Button variant="outline">
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date ? format(date, "PPP") : <span>Select a service date</span>}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={(selectedDate) => {
+                    setDate(selectedDate);
+                    setOpen(false);
+                  }}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+            {errors.serviceDate && (
+              <Label className="text-red-500">
+                {errors.serviceDate.message}
+              </Label>
+            )}
+          </div>
+          <CardDescription>
+            Please note that this is not a guaranteed appointment. We will
+            contact you to confirm your appointment time and date.
+          </CardDescription>
+          <Button type="submit" className="w-full">
+            {isSubmitting ? (
+              <LoaderCircle className="animate-spin" />
+            ) : (
+              "Submit"
+            )}
+          </Button>
+        </form>
+      </CardContent>
     </Card>
   );
 }

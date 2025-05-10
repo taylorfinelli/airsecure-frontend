@@ -1,6 +1,7 @@
 import { menuItems } from "@/components/navbar/utils";
 import { useState } from "react";
 import { X } from "lucide-react";
+import Schedule from "@/components/schedule";
 
 export default function MobileDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,12 +14,12 @@ export default function MobileDropdown() {
     <div className="relative md:hidden z-10">
       {/* Hamburger Icon */}
       <button
-        className="flex flex-col justify-center items-center space-y-1.5 w-8 h-8 rounded-sm bg-green-primary"
+        className="flex flex-col justify-center items-center space-y-1.5 w-8 h-8"
         onClick={toggleMenu}
       >
-        <div className="w-6 h-0.5 bg-white"></div>
-        <div className="w-6 h-0.5 bg-white"></div>
-        <div className="w-6 h-0.5 bg-white"></div>
+        <div className="w-6 h-0.5 bg-green-primary"></div>
+        <div className="w-6 h-0.5 bg-green-primary"></div>
+        <div className="w-6 h-0.5 bg-green-primary"></div>
       </button>
 
       {/* Sliding Menu */}
@@ -34,6 +35,7 @@ export default function MobileDropdown() {
               <li className="py-2 cursor-pointer">{item.text}</li>
             ))}
           </ul>
+          <Schedule />
         </div>
       </div>
     </div>

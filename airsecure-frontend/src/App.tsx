@@ -6,7 +6,7 @@ import ScheduleAndEstimate from "./pages/schedule-and-estimate";
 export default function App() {
   return (
     <Router>
-      <div className="flex flex-col items-center bg-slate-100">
+      <div className="flex flex-col items-center bg-slate-100 min-h-screen">
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
