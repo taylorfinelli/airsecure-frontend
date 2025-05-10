@@ -4,16 +4,19 @@ import FAQ from "./faq";
 import Hero from "./hero";
 import Why from "./why";
 import Certified from "./certified";
+import Footer from "./footer";
 
 export default function Home() {
   return (
-    <div className="w-full mb-40">
+    // removed mb-40 from div as it left whitespace under footer
+    <div className="w-full">
       <Hero />
       <Why />
       <BeforeAndAfter />
       <DidYouKnow />
       <FAQ />
       <Certified />
+      <Footer />
     </div>
   );
 }
