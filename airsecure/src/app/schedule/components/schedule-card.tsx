@@ -132,6 +132,22 @@ export default function ScheduleCard({ estimateDetails }: { estimateDetails: str
   };
 
   const submitForm = async (data: ScheduleForm) => {
+    const lastSubmitTime = localStorage.getItem("lastContactSubmit");
+
+    if (lastSubmitTime) {
+      const lastTime = parseInt(lastSubmitTime, 10);
+      const now = Date.now();
+      const FIVE_MINUTES = 5 * 60 * 1000;
+
+      if (now - lastTime < FIVE_MINUTES) {
+        toast("Wait", {
+          description:
+            "You've already submitted a request recently. Please wait a few minutes before trying again.",
+        });
+        return;
+      }
+    }
+
     const formattedData = {
       ...data,
       serviceDate: format(data.serviceDate, "MM-dd-yyyy"),
@@ -161,14 +177,20 @@ export default function ScheduleCard({ estimateDetails }: { estimateDetails: str
 
     try {
       const command = new SendEmailCommand(params);
-      const response = await sesClient.send(command);
-    } catch (error) {
-      console.error("Failed to send email:", error);
-    } finally {
+      await sesClient.send(command);
       reset();
       setDate(undefined);
-      toast("Your information has been received. We will contact you soon.");
+      toast("Success!", {
+        description: "Your information has been received. We will contact you soon.",
+      });
       setAlertOpen(false);
+      localStorage.setItem("lastContactSubmit", Date.now().toString());
+    } catch (error) {
+      toast("Request send failure", {
+        description:
+          "Unable to send contact request. Please try again later or schedule an appointment over the phone.",
+      });
+      console.error("Failed to send email:", error);
     }
   };
 
