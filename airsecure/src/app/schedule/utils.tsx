@@ -41,12 +41,12 @@ export const termsAndConditionsSummary = (
     <strong>Data Use and Privacy</strong>
     <br />
     Your personal information will be used solely for scheduling and service purposes and will not
-    be shared or sold to third parties. For full details, please refer to our Privacy Policy.
+    be shared or sold to third parties.
     <br />
     <br />
     <strong>Changes and Cancellations</strong>
     <br />
-    To reschedule or cancel your appointment, please contact our team at least 24 hours in advance
+    To reschedule or cancel your appointment, please contact our team at least 48 hours in advance
     using the provided phone number.
   </span>
 );

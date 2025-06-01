@@ -58,7 +58,7 @@ export default function EstimateCard({ setEstimateDetails }: { setEstimateDetail
 
   const handleClick = () => {
     setEstimateDetails(
-      "Added from estimator:\n" +
+      "[Added from estimator]\n" +
         selectedItems.map((item) => item.serviceName).join(", ") +
         "\nEstimated price: $" +
         totalPrice
@@ -70,7 +70,7 @@ export default function EstimateCard({ setEstimateDetails }: { setEstimateDetail
       <Card className="rounded-2xl w-full">
         <CardHeader className="flex flex-col items-center gap-y-4">
           <Header text="Price Estimator" variant="dark" center={true} />
-          <Separator />
+          <Separator className="border-0" />
         </CardHeader>
         <CardContent className="flex flex-col gap-y-4 items-center">
           <div className="w-full">

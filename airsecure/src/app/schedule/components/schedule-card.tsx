@@ -23,8 +23,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
 import { termsAndConditionsSummary } from "../utils";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+import { toast, Toaster } from "sonner";
 
 interface ScheduleForm {
   firstName: string;
@@ -60,6 +61,7 @@ export default function ScheduleCard({ estimateDetails }: { estimateDetails: str
     watch,
     setValue,
     trigger,
+    reset,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<ScheduleForm>({
     resolver: zodResolver(scheduleFormSchema),
@@ -94,6 +96,14 @@ export default function ScheduleCard({ estimateDetails }: { estimateDetails: str
     }
   };
 
+  const sesClient = new SESClient({
+    region: "us-west-1", // Change to your SES region
+    credentials: {
+      accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID!,
+      secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY!,
+    },
+  });
+
   const phoneNumber = watch("phoneNumber");
 
   useEffect(() => {
@@ -121,12 +131,45 @@ export default function ScheduleCard({ estimateDetails }: { estimateDetails: str
     }
   };
 
-  const submitForm = (data: ScheduleForm) => {
+  const submitForm = async (data: ScheduleForm) => {
     const formattedData = {
       ...data,
       serviceDate: format(data.serviceDate, "MM-dd-yyyy"),
     };
-    console.log("t");
+
+    const params = {
+      Destination: {
+        ToAddresses: ["airsecureut@Gmail.com"],
+      },
+      Message: {
+        Body: {
+          Text: {
+            Data:
+              `Name: ${formattedData.firstName + " " + formattedData.lastName}\n` +
+              `Phone number: ${formattedData.phoneNumber}\n` +
+              `Email: ${formattedData.email}\n` +
+              `Service Date: ${formattedData.serviceDate}\n` +
+              `Service Description:\n${formattedData.servicesNeeded}\n`,
+          },
+        },
+        Subject: {
+          Data: "Contact Request via AirSecure Scheduling Page",
+        },
+      },
+      Source: "airsecureut@Gmail.com",
+    };
+
+    try {
+      const command = new SendEmailCommand(params);
+      const response = await sesClient.send(command);
+    } catch (error) {
+      console.error("Failed to send email:", error);
+    } finally {
+      reset();
+      setDate(undefined);
+      toast("Your information has been received. We will contact you soon.");
+      setAlertOpen(false);
+    }
   };
 
   return (
@@ -228,12 +271,15 @@ export default function ScheduleCard({ estimateDetails }: { estimateDetails: str
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel onClick={() => setAlertOpen(false)}>Cancel</AlertDialogCancel>
-                <AlertDialogAction type="submit">Continue</AlertDialogAction>
+                <AlertDialogAction className="sm:w-36" onClick={handleSubmit(submitForm)}>
+                  {isSubmitting ? <LoaderCircle className="animate-spin" /> : "Agree and Submit"}
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         </form>
       </CardContent>
+      <Toaster />
     </Card>
   );
 }
