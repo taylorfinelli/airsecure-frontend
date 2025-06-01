@@ -31,11 +31,13 @@ export default function MobileDropdown() {
         <X className="m-6 cursor-pointer" onClick={toggleMenu} />
         <div className="p-6">
           <ul>
-            {menuItems.map((item) => (
-              <li className="py-2 cursor-pointer">{item.text}</li>
+            {menuItems.map((item, i) => (
+              <li key={i} className="py-2 cursor-pointer">
+                {item.text}
+              </li>
             ))}
           </ul>
-          <Schedule />
+          <Schedule variant="secondary" />
         </div>
       </div>
     </div>

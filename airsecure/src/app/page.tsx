@@ -1,8 +1,8 @@
-import BeforeAndAfter from "@/pages/home/before-and-after";
-import DidYouKnow from "@/pages/home/did-you-know";
-import FAQ from "@/pages/home/faq";
-import Hero from "@/pages/home/hero";
-import Why from "@/pages/home/why";
+import BeforeAndAfter from "@/app/home/before-and-after";
+import DidYouKnow from "@/app/home/did-you-know";
+import FAQ from "@/app/home/faq";
+import Hero from "@/app/home/hero";
+import Why from "@/app/home/why";
 
 export default function Home() {
   return (

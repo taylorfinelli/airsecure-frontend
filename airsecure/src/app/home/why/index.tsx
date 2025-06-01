@@ -8,7 +8,7 @@ export default function Why() {
   return (
     <div className="flex flex-col items-center py-8">
       <div className="flex flex-col w-5/6 gap-y-8 mb-8 max-w-screen-2xl">
-        <p className="md:text-4xl font-bold text-center text-2xl text-green-secondary">
+        <p className="md:text-4xl font-bold text-center text-2xl text-brand-secondary">
           Top Benefits of Air Duct Cleaning
         </p>
 
@@ -19,7 +19,8 @@ export default function Why() {
                 ducts, you're helping prevent unnecessary wear and tear. This
                 can extend the lifespan of your system, saving you money on
                 repairs or replacements in the long run."
-            icon={<ThermometerSunIcon className="h-8 w-8 text-green-secondary" />}
+            icon={<ThermometerSunIcon className="h-8 w-8 text-brand-secondary" />}
+            src="clean_air.png"
           />
 
           <WhyCard
@@ -29,7 +30,8 @@ export default function Why() {
                 circulating throughout your home. Cleaning the ducts helps
                 eliminate these odors, leaving your home smelling fresher and
                 more comfortable."
-            icon={<SprayCan className="h-8 w-8 text-green-secondary" />}
+            icon={<SprayCan className="h-8 w-8 text-brand-secondary" />}
+            src="dog_vent.png"
           />
 
           <WhyCard
@@ -40,7 +42,8 @@ export default function Why() {
                 and allergens in the air, which not only improves your home's
                 air quality but also means you'll spend less time dusting and
                 cleaning overall."
-            icon={<AirVent className="h-8 w-8 text-green-secondary" />}
+            icon={<AirVent className="h-8 w-8 text-brand-secondary" />}
+            src="livingroom.png"
           />
         </div>
       </div>

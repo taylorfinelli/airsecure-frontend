@@ -6,10 +6,7 @@ export default function Hero() {
     <div className="flex items-center justify-center">
       <div className="h-96 w-full bg-brand-primary flex flex-row">
         <div className="h-full lg:block w-full overflow-hidden">
-          <img
-            src="/assets/0V15-01.jpg"
-            className="object-cover object-right w-full h-full opacity-30"
-          />
+          <img src="mountains.png" className="object-cover object-right w-full h-full opacity-30" />
         </div>
       </div>
       <div className="absolute flex justify-center max-w-screen-2xl w-5/6">

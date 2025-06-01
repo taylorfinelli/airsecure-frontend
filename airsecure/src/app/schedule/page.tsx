@@ -1,24 +1,15 @@
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardDescription,
-} from "@/components/ui/card";
+"use client";
 import ScheduleCard from "./components/schedule-card";
-import Header from "@/components/text/header";
-import { Separator } from "@/components/ui/separator";
-import { useState, useMemo } from "react";
-import { Button } from "@/components/ui/button";
 import EstimateCard from "./components/estimate-card";
+import { useState } from "react";
 
 export default function ScheduleAndEstimate() {
-  
-
+  const [estimateDetails, setEstimateDetails] = useState("");
   return (
     <div className="w-full flex justify-center mb-40">
       <div className="w-5/6 max-w-screen-2xl flex md:flex-row flex-col-reverse gap-y-8 gap-x-4">
-        <ScheduleCard />
-        <EstimateCard />
+        <ScheduleCard estimateDetails={estimateDetails} />
+        <EstimateCard setEstimateDetails={setEstimateDetails} />
       </div>
     </div>
   );

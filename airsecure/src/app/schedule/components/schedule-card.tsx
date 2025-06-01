@@ -1,27 +1,30 @@
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { CalendarIcon, LoaderCircle } from "lucide-react";
 import { z, ZodType } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Header from "@/components/text/header";
 import { format } from "date-fns";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { AlertDialogTrigger } from "@radix-ui/react-alert-dialog";
+import { termsAndConditionsSummary } from "../utils";
 
 interface ScheduleForm {
   firstName: string;
@@ -38,14 +41,17 @@ const scheduleFormSchema: ZodType<ScheduleForm> = z.object({
   phoneNumber: z.string().min(1, "Phone number is required"),
   email: z.string().email("Invalid email address"),
   servicesNeeded: z.string().min(1, "Services needed is required"),
-  serviceDate: z.date({
-    required_error: "Please select a service date",
-  }).min(new Date(), { message: "Service date must be in the future" }),
+  serviceDate: z
+    .date({
+      required_error: "Please select a service date",
+    })
+    .min(new Date(), { message: "Service date must be in the future" }),
 });
 
-export default function ScheduleCard() {
+export default function ScheduleCard({ estimateDetails }: { estimateDetails: string }) {
   const [date, setDate] = useState<Date | undefined>();
   const [open, setOpen] = useState(false);
+  const [alertOpen, setAlertOpen] = useState(false);
 
   const {
     register,
@@ -53,9 +59,11 @@ export default function ScheduleCard() {
     control,
     watch,
     setValue,
+    trigger,
     formState: { errors, isSubmitting, isSubmitSuccessful },
   } = useForm<ScheduleForm>({
     resolver: zodResolver(scheduleFormSchema),
+    mode: "onBlur",
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -69,6 +77,7 @@ export default function ScheduleCard() {
   useEffect(() => {
     if (date) {
       setValue("serviceDate", date);
+      trigger("serviceDate");
     }
   }, [date, setValue]);
 
@@ -81,10 +90,7 @@ export default function ScheduleCard() {
     } else if (cleaned.length <= 6) {
       return `${cleaned.slice(0, 3)}-${cleaned.slice(3)}`;
     } else {
-      return `${cleaned.slice(0, 3)}-${cleaned.slice(3, 6)}-${cleaned.slice(
-        6,
-        10
-      )}`;
+      return `${cleaned.slice(0, 3)}-${cleaned.slice(3, 6)}-${cleaned.slice(6, 10)}`;
     }
   };
 
@@ -97,12 +103,30 @@ export default function ScheduleCard() {
     }
   }, [phoneNumber, setValue]); // When the phone number changes
 
+  const servicesNeeded = watch("servicesNeeded");
+
+  useEffect(() => {
+    if (estimateDetails) {
+      setValue(
+        "servicesNeeded",
+        (servicesNeeded?.length !== 0 ? servicesNeeded + "\n" : "") + estimateDetails
+      );
+    }
+  }, [estimateDetails]);
+
+  const handleClick = async () => {
+    const isValid = await trigger();
+    if (isValid) {
+      setAlertOpen(true);
+    }
+  };
+
   const submitForm = (data: ScheduleForm) => {
     const formattedData = {
       ...data,
       serviceDate: format(data.serviceDate, "MM-dd-yyyy"),
     };
-    console.log(formattedData);
+    console.log("t");
   };
 
   return (
@@ -110,42 +134,23 @@ export default function ScheduleCard() {
       <CardHeader className="flex flex-col items-center">
         <Header size="2xl" text="Don't need an estimate?" variant="dark" center={true} />
         <p>Find your scheduling options below.</p>
-        <Button className="text-md w-full">
-          Call us today @ 801-592-3163
-        </Button>
+        <Button className="text-md w-full">Call us today @ 801-592-3163</Button>
       </CardHeader>
       <CardContent className="flex flex-col gap-y-4 items-center">
         <Separator />
-        <form
-          className="flex flex-col items-center gap-y-4"
-          onSubmit={handleSubmit(submitForm)}
-        >
-          <div className="flex flex-row gap-x-4">
-            <div>
+        <form className="flex flex-col items-center gap-y-4" onSubmit={handleSubmit(submitForm)}>
+          <div className="flex flex-row w-full gap-x-4">
+            <div className="w-1/2">
               <Label>First name</Label>
-              <Input
-                id="first-name"
-                placeholder="John"
-                {...register("firstName")}
-              />
+              <Input id="first-name" placeholder="John" {...register("firstName")} />
               {errors.firstName && (
-                <Label className="text-red-500">
-                  {errors.firstName.message}
-                </Label>
+                <Label className="text-red-500">{errors.firstName.message}</Label>
               )}
             </div>
-            <div>
+            <div className="w-1/2">
               <Label>Last name</Label>
-              <Input
-                id="last-name"
-                placeholder="Doe"
-                {...register("lastName")}
-              />
-              {errors.lastName && (
-                <Label className="text-red-500">
-                  {errors.lastName.message}
-                </Label>
-              )}
+              <Input id="last-name" placeholder="Doe" {...register("lastName")} />
+              {errors.lastName && <Label className="text-red-500">{errors.lastName.message}</Label>}
             </div>
           </div>
           <div className="w-full">
@@ -165,21 +170,13 @@ export default function ScheduleCard() {
               )}
             />
             {errors.phoneNumber && (
-              <Label className="text-red-500">
-                {errors.phoneNumber.message}
-              </Label>
+              <Label className="text-red-500">{errors.phoneNumber.message}</Label>
             )}
           </div>
           <div className="w-full">
             <Label>Email address</Label>
-            <Input
-              id="email"
-              placeholder="john.doe@mail.com"
-              {...register("email")}
-            />
-            {errors.email && (
-              <Label className="text-red-500">{errors.email.message}</Label>
-            )}
+            <Input id="email" placeholder="john.doe@mail.com" {...register("email")} />
+            {errors.email && <Label className="text-red-500">{errors.email.message}</Label>}
           </div>
           <div className="w-full">
             <Label>Services needed</Label>
@@ -189,9 +186,7 @@ export default function ScheduleCard() {
               {...register("servicesNeeded")}
             />
             {errors.servicesNeeded && (
-              <Label className="text-red-500">
-                {errors.servicesNeeded.message}
-              </Label>
+              <Label className="text-red-500">{errors.servicesNeeded.message}</Label>
             )}
           </div>
           <div className="w-full">
@@ -215,22 +210,28 @@ export default function ScheduleCard() {
               </PopoverContent>
             </Popover>
             {errors.serviceDate && (
-              <Label className="text-red-500">
-                {errors.serviceDate.message}
-              </Label>
+              <Label className="text-red-500">{errors.serviceDate.message}</Label>
             )}
           </div>
           <CardDescription>
-            Please note that this is not a guaranteed appointment. We will
-            contact you to confirm your appointment time and date.
+            Please note that this is not a guaranteed appointment. We will contact you to confirm
+            your appointment time and date.
           </CardDescription>
-          <Button type="submit" className="w-full">
-            {isSubmitting ? (
-              <LoaderCircle className="animate-spin" />
-            ) : (
-              "Submit"
-            )}
+          <Button type="button" onClick={handleClick} className="w-full">
+            {isSubmitting ? <LoaderCircle className="animate-spin" /> : "Submit"}
           </Button>
+          <AlertDialog open={alertOpen}>
+            <AlertDialogContent className="h-3/4 overflow-scroll">
+              <AlertDialogHeader>
+                <AlertDialogTitle>Submit Form</AlertDialogTitle>
+                <AlertDialogDescription>{termsAndConditionsSummary}</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel onClick={() => setAlertOpen(false)}>Cancel</AlertDialogCancel>
+                <AlertDialogAction type="submit">Continue</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </form>
       </CardContent>
     </Card>

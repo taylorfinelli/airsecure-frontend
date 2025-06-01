@@ -12,7 +12,7 @@ export default function Header({
   return (
     <p
       className={`md:text-${size} font-bold text-2xl ${
-        variant === "light" ? "text-white" : "text-green-secondary"
+        variant === "light" ? "text-white" : "text-brand-secondary"
       } ${center ? "text-center" : ""}`}
     >
       {text}
