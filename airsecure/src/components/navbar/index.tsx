@@ -18,6 +18,7 @@ export default function NavBar() {
             {menuItems.map((item, i) => (
               <li
                 key={i}
+                onClick={() => (window.location.href = item.href)}
                 className="cursor-pointer md:hover:text-brand-primary transition duration-200"
               >
                 {item.text}

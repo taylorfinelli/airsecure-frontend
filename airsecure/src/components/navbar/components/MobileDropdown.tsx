@@ -32,7 +32,11 @@ export default function MobileDropdown() {
         <div className="p-6">
           <ul>
             {menuItems.map((item, i) => (
-              <li key={i} className="py-2 cursor-pointer">
+              <li
+                key={i}
+                onClick={() => (window.location.href = item.href)}
+                className="py-2 cursor-pointer"
+              >
                 {item.text}
               </li>
             ))}
