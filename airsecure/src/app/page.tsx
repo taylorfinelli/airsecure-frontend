@@ -8,7 +8,7 @@ import Footer from "@/app/home/footer";
 
 export default function Home() {
   return (
-    <div className="w-full mb-40">
+    <div className="w-full">
       <Hero />
       <Why />
       <BeforeAndAfter />
