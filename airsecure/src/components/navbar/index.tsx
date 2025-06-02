@@ -19,7 +19,7 @@ export default function NavBar() {
               <li
                 key={i}
                 onClick={() => (window.location.href = item.href)}
-                className="cursor-pointer md:hover:text-brand-primary transition duration-200"
+                className="cursor-pointer md:hover:text-brand-secondary transition duration-200"
               >
                 {item.text}
               </li>

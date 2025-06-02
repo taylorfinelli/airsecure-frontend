@@ -46,7 +46,7 @@ export default function FAQ() {
           {accordionItems.map((item, id) => (
             <div key={id}>
               <AccordionItem value={id.toString()}>
-                <AccordionTrigger className="text-brand-secondary hover:text-brand-primary">
+                <AccordionTrigger className="text-brand-secondary hover:text-brand-secondary">
                   {
                     <div className="flex flex-row items-center gap-x-2">
                       <div>

@@ -5,7 +5,7 @@ export default function Schedule({ variant = "primary" }) {
     <Button
       className={
         variant === "secondary"
-          ? "bg-white text-brand-primary hover:bg-neutral-100/90 active:bg-neutral-100/80"
+          ? "bg-white text-brand-secondary hover:bg-neutral-100/90 active:bg-neutral-100/80"
           : "bg-brand-primary text-white"
       }
       onClick={() => {
