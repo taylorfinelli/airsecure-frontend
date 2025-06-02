@@ -1,1 +1,1 @@
-export const carouselImagePaths = ["img_0.jpg", "img_1.jpg", "img_2.jpg", "img_3.jpg"];
+export const carouselImagePaths = ["before_1.jpg", "after_1.jpg", "before_2.jpg", "after_2.jpg"];
